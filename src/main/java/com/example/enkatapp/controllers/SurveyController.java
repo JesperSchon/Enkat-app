@@ -42,13 +42,6 @@ public class SurveyController {
         }
     }
 
-    @GetMapping("/{id}/responses")
-    public ResponseEntity<SurveyResponseDto> getSurveyWithResponses(@PathVariable Long id) {
-        SurveyResponseDto surveyResponse = surveyService.getSurveyWithResponses(id);
-        return ResponseEntity.ok(surveyResponse);
-    }
-
-
     @PutMapping("/{id}")
     public ResponseEntity<Survey> updateSurvey(@PathVariable Long id, @RequestBody Survey surveyDetails) {
         try {

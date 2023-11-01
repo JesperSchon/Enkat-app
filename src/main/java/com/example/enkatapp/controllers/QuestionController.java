@@ -5,6 +5,7 @@ import com.example.enkatapp.models.Survey;
 import com.example.enkatapp.services.QuestionService;
 import com.example.enkatapp.services.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,12 +27,23 @@ public class QuestionController {
 
 
     @PostMapping
-    public ResponseEntity<Question> createQuestion(@RequestBody Question question, @RequestParam Long surveyId) {
-        Survey survey = surveyService.getSurveyById(surveyId);
+    public ResponseEntity<?> createQuestion(@RequestBody Question question, @RequestParam(required = false) Long surveyId) {
+        if (surveyId == null) {
+            return ResponseEntity.badRequest().body("Survey ID must be provided");
+        }
+
+        Survey survey;
+        try {
+            survey = surveyService.getSurveyById(surveyId);
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Survey not found with id " + surveyId);
+        }
+
         question.setSurvey(survey);
         Question createdQuestion = questionService.createQuestion(question);
         survey.getQuestions().add(createdQuestion);
         surveyService.updateSurvey(surveyId, survey);
+
         return ResponseEntity.ok(createdQuestion);
     }
 

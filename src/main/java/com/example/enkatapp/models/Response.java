@@ -21,7 +21,7 @@ public class Response {
     @JoinColumn(name = "survey_id")
     private Survey survey;
 
-    @ElementCollection
+    @OneToMany(mappedBy = "response")
     private List<Answer> answers;
 
     public Long getId() {

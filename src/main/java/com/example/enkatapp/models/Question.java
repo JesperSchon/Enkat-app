@@ -27,10 +27,6 @@ public class Question {
     @JsonBackReference
     private Survey survey;
 
-    @OneToMany(mappedBy = "question")
-    @JsonManagedReference
-    private List<Answer> answers;
-
     // getters och setters
 
     public Long getId() {

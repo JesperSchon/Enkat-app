@@ -1,35 +1,33 @@
 package com.example.enkatapp.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.Embeddable;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
-@Embeddable
+@Entity
 public class Answer {
-    private Long questionId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String text; // för TEXT
     private String selectedOption; // för CHOICE
     private Integer scale; // för SCALE
 
     @ManyToOne
     @JoinColumn(name = "question_id")
-    @JsonBackReference
     private Question question;
 
+    @ManyToOne
+    @JoinColumn(name = "response_id")
+    private Response response;
+
     // getters och setters
-
-    public Long getQuestionId() {
-        return questionId;
-    }
-
     public Question getQuestion() {
         return question;
     }
 
-
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
     public String getText() {
@@ -54,5 +52,9 @@ public class Answer {
 
     public void setScale(Integer scale) {
         this.scale = scale;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
