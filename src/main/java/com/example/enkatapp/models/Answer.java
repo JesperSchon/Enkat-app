@@ -22,6 +22,10 @@ public class Answer {
     private Response response;
 
     // getters och setters
+
+    public void setResponse(Response response) {
+        this.response = response;
+    }
     public Question getQuestion() {
         return question;
     }

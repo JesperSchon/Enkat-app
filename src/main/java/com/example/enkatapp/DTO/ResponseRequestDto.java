@@ -1,12 +1,10 @@
 package com.example.enkatapp.DTO;
 
-import com.example.enkatapp.models.Answer;
-
 import java.util.List;
 
 public class ResponseRequestDto {
     private Long surveyId;
-    private List<Answer> answers;
+    private List<AnswerDTO> answers;
 
     // getters och setters
 
@@ -18,11 +16,14 @@ public class ResponseRequestDto {
         this.surveyId = surveyId;
     }
 
-    public List<Answer> getAnswers() {
+    public List<AnswerDTO> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
+    public void setAnswers(List<AnswerDTO> answers) {
         this.answers = answers;
     }
 }
+
+
+
