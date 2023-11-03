@@ -1,5 +1,8 @@
 package com.example.enkatapp.models;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum QuestionType {
     TEXT("text"),
     CHOICE("choice"),
@@ -11,17 +14,20 @@ public enum QuestionType {
         this.value = value;
     }
 
+    @JsonValue
     public String getValue() {
         return value;
     }
 
+
     public static QuestionType fromValue(String value) {
         for (QuestionType type : values()) {
-            if (type.getValue().equals(value)) {
+            if (type.name().equalsIgnoreCase(value)) {
                 return type;
             }
         }
         throw new IllegalArgumentException("Unknown value: " + value);
     }
 }
+
 

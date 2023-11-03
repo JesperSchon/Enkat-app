@@ -21,7 +21,7 @@ public class Survey {
         createdAt = LocalDateTime.now();
     }
 
-    @OneToMany(mappedBy = "survey")
+    @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Question> questions;
 
