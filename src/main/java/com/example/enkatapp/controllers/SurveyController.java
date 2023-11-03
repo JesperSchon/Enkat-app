@@ -1,6 +1,5 @@
 package com.example.enkatapp.controllers;
 
-import com.example.enkatapp.DTO.SurveyResponseDto;
 import com.example.enkatapp.models.Survey;
 import com.example.enkatapp.services.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;

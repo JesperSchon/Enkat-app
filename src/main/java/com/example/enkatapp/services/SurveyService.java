@@ -11,12 +11,10 @@ import java.util.NoSuchElementException;
 public class SurveyService {
 
     private final SurveyRepository surveyRepository;
-    private final ResponseService responseService;
 
     @Autowired
     public SurveyService(SurveyRepository surveyRepository, ResponseService responseService) {
         this.surveyRepository = surveyRepository;
-        this.responseService = responseService;
     }
     public Survey createSurvey(Survey survey) {
         return surveyRepository.save(survey);

@@ -1,6 +1,5 @@
 package com.example.enkatapp.models;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum QuestionType {
@@ -8,7 +7,7 @@ public enum QuestionType {
     CHOICE("choice"),
     SCALE("scale");
 
-    private String value;
+    private final String value;
 
     QuestionType(String value) {
         this.value = value;

@@ -2,15 +2,11 @@ package com.example.enkatapp.controllers;
 
 import com.example.enkatapp.DTO.AnswerDTO;
 import com.example.enkatapp.DTO.ResponseRequestDto;
-import com.example.enkatapp.models.Answer;
-import com.example.enkatapp.models.Question;
 import com.example.enkatapp.models.Response;
 import com.example.enkatapp.services.ResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
