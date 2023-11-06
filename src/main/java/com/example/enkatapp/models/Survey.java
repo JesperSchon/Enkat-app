@@ -25,6 +25,18 @@ public class Survey {
     @JsonManagedReference
     private List<Question> questions;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id") // Denna kolumn kommer att innehålla referensen till User-tabellen
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

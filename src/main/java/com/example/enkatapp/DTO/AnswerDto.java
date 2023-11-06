@@ -1,6 +1,6 @@
 package com.example.enkatapp.DTO;
 
-public class AnswerDTO {
+public class AnswerDto {
     private Long questionId;
     private String text;
     private String selectedOption;

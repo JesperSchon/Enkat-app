@@ -1,6 +1,9 @@
 package com.example.enkatapp.models;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -19,21 +22,49 @@ public class User {
     private String email;
 
     @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Role> roles;
+    private Role role;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Survey> surveys = new ArrayList<>();
     // Konstruktorer, getters och setters
 
     public User() {
     }
 
-    public User(String username, String password, String email, Set<Role> roles) {
+    public List<Survey> getSurveys() {
+        return surveys;
+    }
+
+    public void setSurveys(List<Survey> surveys) {
+        this.surveys = surveys;
+    }
+
+    // En hjälpmetod för att enkelt lägga till en Survey till en User
+    public void addSurvey(Survey survey) {
+        surveys.add(survey);
+        survey.setUser(this);
+    }
+
+    // En hjälpmetod för att enkelt ta bort en Survey från en User
+    public void removeSurvey(Survey survey) {
+        surveys.remove(survey);
+        survey.setUser(null);
+    }
+
+    public User(String username, String password, String email, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
-        this.roles = roles;
+        this.role = role;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
     public Long getId() {
         return id;
     }
@@ -64,13 +95,5 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
     }
 }

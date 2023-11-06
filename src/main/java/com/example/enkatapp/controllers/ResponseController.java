@@ -1,16 +1,13 @@
 package com.example.enkatapp.controllers;
 
-import com.example.enkatapp.DTO.AnswerDTO;
+import com.example.enkatapp.DTO.AnswerDto;
 import com.example.enkatapp.DTO.ResponseRequestDto;
-import com.example.enkatapp.models.Answer;
-import com.example.enkatapp.models.Question;
 import com.example.enkatapp.models.Response;
 import com.example.enkatapp.services.ResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -27,8 +24,8 @@ public class ResponseController {
 
     @PostMapping
     public ResponseEntity<Response> createResponse(@RequestBody ResponseRequestDto responseRequest) {
-        List<AnswerDTO> answerDtos = responseRequest.getAnswers();
-        for (AnswerDTO answerDto : answerDtos) {
+        List<AnswerDto> answerDtos = responseRequest.getAnswers();
+        for (AnswerDto answerDto : answerDtos) {
             if (answerDto.getQuestionId() == null) {
                 throw new IllegalArgumentException("Fråge-ID i svaret får inte vara null");
             }

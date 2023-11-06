@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ResponseRequestDto {
     private Long surveyId;
-    private List<AnswerDTO> answers;
+    private List<AnswerDto> answers;
 
     // getters och setters
 
@@ -16,11 +16,11 @@ public class ResponseRequestDto {
         this.surveyId = surveyId;
     }
 
-    public List<AnswerDTO> getAnswers() {
+    public List<AnswerDto> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<AnswerDTO> answers) {
+    public void setAnswers(List<AnswerDto> answers) {
         this.answers = answers;
     }
 }
