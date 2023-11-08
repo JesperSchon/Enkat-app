@@ -5,12 +5,15 @@ import com.example.enkatapp.services.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/surveys")
+@CrossOrigin(origins = "http://localhost:3000")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class SurveyController {
 
     private final SurveyService surveyService;

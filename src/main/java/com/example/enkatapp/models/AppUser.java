@@ -1,20 +1,23 @@
 package com.example.enkatapp.models;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class AppUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique=true)
+    @Column(unique = true)
     private String username;
 
     private String password;
@@ -24,11 +27,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "appUser", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Survey> surveys = new ArrayList<>();
+
     // Konstruktorer, getters och setters
 
-    public User() {
+    public AppUser() {
     }
 
     public List<Survey> getSurveys() {
@@ -42,16 +46,16 @@ public class User {
     // En hjälpmetod för att enkelt lägga till en Survey till en User
     public void addSurvey(Survey survey) {
         surveys.add(survey);
-        survey.setUser(this);
+        survey.setAppUser(this);
     }
 
     // En hjälpmetod för att enkelt ta bort en Survey från en User
     public void removeSurvey(Survey survey) {
         surveys.remove(survey);
-        survey.setUser(null);
+        survey.setAppUser(null);
     }
 
-    public User(String username, String password, String email, Role role) {
+    public AppUser(String username, String password, String email, Role role) {
         this.username = username;
         this.password = password;
         this.email = email;
@@ -65,6 +69,7 @@ public class User {
     public void setRole(Role role) {
         this.role = role;
     }
+
     public Long getId() {
         return id;
     }
@@ -75,6 +80,31 @@ public class User {
 
     public String getUsername() {
         return username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return role.getAuthorities();
     }
 
     public void setUsername(String username) {
@@ -97,3 +127,4 @@ public class User {
         this.email = email;
     }
 }
+

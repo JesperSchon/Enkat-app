@@ -26,15 +26,15 @@ public class Survey {
     private List<Question> questions;
 
     @ManyToOne
-    @JoinColumn(name = "user_id") // Denna kolumn kommer att innehålla referensen till User-tabellen
-    private User user;
+    @JoinColumn(name = "app_user_id")
+    private AppUser appUser;
 
-    public User getUser() {
-        return user;
+    public AppUser getAppUser() {
+        return appUser;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAppUser(AppUser appUser) {
+        this.appUser = appUser;
     }
 
     public void setId(Long id) {

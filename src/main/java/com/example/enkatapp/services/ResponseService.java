@@ -1,6 +1,7 @@
 package com.example.enkatapp.services;
 
-import com.example.enkatapp.DTO.AnswerDto;
+
+import com.example.enkatapp.dto.AnswerDto;
 import com.example.enkatapp.models.Answer;
 import com.example.enkatapp.models.Question;
 import com.example.enkatapp.models.Response;

@@ -1,7 +1,7 @@
 package com.example.enkatapp.controllers;
 
-import com.example.enkatapp.DTO.AnswerDto;
-import com.example.enkatapp.DTO.ResponseRequestDto;
+import com.example.enkatapp.dto.AnswerDto;
+import com.example.enkatapp.dto.ResponseRequestDto;
 import com.example.enkatapp.models.Response;
 import com.example.enkatapp.services.ResponseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +13,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/responses")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ResponseController {
 
     private final ResponseService responseService;

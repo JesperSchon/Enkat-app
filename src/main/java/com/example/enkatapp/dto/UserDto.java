@@ -1,4 +1,4 @@
-package com.example.enkatapp.DTO;
+package com.example.enkatapp.dto;
 
 public class UserDto {
     private String username;
