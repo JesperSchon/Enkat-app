@@ -1,37 +1,37 @@
 package com.example.enkatapp.security;
 
-import com.example.enkatapp.models.AppUser;
-import com.example.enkatapp.repositories.AppUserRepository;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.example.enkatapp.models.Role;
+import com.example.enkatapp.models.UserEntity;
+import com.example.enkatapp.repositories.UserRepository;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final AppUserRepository appUserRepository;
+    private UserRepository userRepository;
 
-    @Autowired
-    public CustomUserDetailsService(AppUserRepository appUserRepository) {
-        this.appUserRepository = appUserRepository;
+    public CustomUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        AppUser appUser = appUserRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        UserEntity user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username " + username + " not found"));
+        return new User(user.getUsername(), user.getPassword(), mapRolesToAuthorities(user.getRoles()));
+    }
 
-        // Konvertera AppUser:s roll till en Spring Security GrantedAuthority
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(appUser.getRole().name());
-
-        // Returnera en User (från org.springframework.security.core.userdetails.User) med
-        // användarnamnet, lösenordet och behörigheterna som UserDetails
-        return new User(appUser.getUsername(), appUser.getPassword(), Collections.singletonList(authority));
+    private Collection<GrantedAuthority> mapRolesToAuthorities(List<Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 }

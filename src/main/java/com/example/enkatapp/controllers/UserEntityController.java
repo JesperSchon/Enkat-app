@@ -1,8 +1,8 @@
 package com.example.enkatapp.controllers;
 
-import com.example.enkatapp.models.AppUser;
-import com.example.enkatapp.repositories.AppUserRepository;
-import com.example.enkatapp.services.AppUserService;
+import com.example.enkatapp.models.UserEntity;
+import com.example.enkatapp.repositories.UserRepository;
+import com.example.enkatapp.services.UserEntityService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @CrossOrigin(origins = "http://localhost:3000")
-public class AppUserController {
+public class UserEntityController {
 
-    private final AppUserService appUserService;
+    private final UserEntityService userEntityService;
 
-    public AppUserController(AppUserService appUserService, AppUserRepository appUserRepository) {
-        this.appUserService = appUserService;
+    public UserEntityController(UserEntityService userEntityService, UserRepository userRepository) {
+        this.userEntityService = userEntityService;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<AppUser> createUser(@RequestBody AppUser appUser) {
+    public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity) {
         try {
-            AppUser newUser = appUserService.createUser(appUser);
+            UserEntity newUser = userEntityService.createUser(userEntity);
             return new ResponseEntity<>(newUser, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -31,7 +31,7 @@ public class AppUserController {
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long id) {
         try {
-            appUserService.deleteUser(id);
+            userEntityService.deleteUser(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -26,15 +26,15 @@ public class Survey {
     private List<Question> questions;
 
     @ManyToOne
-    @JoinColumn(name = "app_user_id")
-    private AppUser appUser;
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
 
-    public AppUser getAppUser() {
-        return appUser;
+    public UserEntity getUserEntity() {
+        return userEntity;
     }
 
-    public void setAppUser(AppUser appUser) {
-        this.appUser = appUser;
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
     }
 
     public void setId(Long id) {

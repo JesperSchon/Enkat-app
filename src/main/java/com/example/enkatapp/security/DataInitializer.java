@@ -4,25 +4,24 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-import com.example.enkatapp.models.AppUser;
-import com.example.enkatapp.models.Role;
-import com.example.enkatapp.repositories.AppUserRepository;
+import com.example.enkatapp.models.UserEntity;
+import com.example.enkatapp.repositories.UserRepository;
 
 @Component
 public class DataInitializer {
 
-    @Bean
-    CommandLineRunner initDatabase(AppUserRepository userRepository, PasswordEncoder passwordEncoder) {
+   /* @Bean
+    CommandLineRunner initDatabase(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             String username = "admin";
             // Kolla om användaren redan finns
             if (userRepository.findByUsername(username).isEmpty()) {
                 // Skapa en användare med krypterat lösenord
-                AppUser user = new AppUser();
+                UserEntity user = new UserEntity();
                 user.setUsername(username);
                 user.setPassword(passwordEncoder.encode("password"));
                 user.setEmail("admin@example.com");
-                user.setRole(Role.ADMIN); // Använd din enum för rollen
+                //user.setRole();
 
                 // Spara användaren i databasen
                 userRepository.save(user);
@@ -32,6 +31,6 @@ public class DataInitializer {
                 System.out.println("Användaren " + username + " finns redan i databasen.");
             }
         };
-    }
+    }*/
 }
 

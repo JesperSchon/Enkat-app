@@ -28,7 +28,7 @@ public class ResponseController {
         List<AnswerDto> answerDtos = responseRequest.getAnswers();
         for (AnswerDto answerDto : answerDtos) {
             if (answerDto.getQuestionId() == null) {
-                throw new IllegalArgumentException("Fråge-ID i svaret får inte vara null");
+                throw new IllegalArgumentException("Question ID can not be null");
             }
         }
         Response createdResponse = responseService.createResponse(responseRequest.getSurveyId(), answerDtos);
