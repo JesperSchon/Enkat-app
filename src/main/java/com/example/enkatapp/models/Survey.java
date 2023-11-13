@@ -25,6 +25,18 @@ public class Survey {
     @JsonManagedReference
     private List<Question> questions;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity userEntity;
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

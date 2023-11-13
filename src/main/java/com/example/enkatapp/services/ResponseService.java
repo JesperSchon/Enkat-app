@@ -1,6 +1,7 @@
 package com.example.enkatapp.services;
 
-import com.example.enkatapp.DTO.AnswerDTO;
+
+import com.example.enkatapp.dto.AnswerDto;
 import com.example.enkatapp.models.Answer;
 import com.example.enkatapp.models.Question;
 import com.example.enkatapp.models.Response;
@@ -34,7 +35,7 @@ public class ResponseService {
         this.answerRepository = answerRepository;
     }
 
-    public Response createResponse(Long surveyId, List<AnswerDTO> answerDtos) {
+    public Response createResponse(Long surveyId, List<AnswerDto> answerDtos) {
         Survey survey = surveyRepository.findById(surveyId)
                 .orElseThrow(() -> new NoSuchElementException("Ingen survey hittades med ID: " + surveyId));
         Response response = new Response();
@@ -44,7 +45,7 @@ public class ResponseService {
         response = responseRepository.save(response);
 
         List<Answer> answers = new ArrayList<>();
-        for (AnswerDTO answerDto : answerDtos) {
+        for (AnswerDto answerDto : answerDtos) {
             if (answerDto.getQuestionId() == null) {
                 throw new IllegalArgumentException("Fråge-ID i svaret får inte vara null");
             }

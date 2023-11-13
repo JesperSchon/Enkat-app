@@ -1,16 +1,19 @@
 package com.example.enkatapp.controllers;
 
-import com.example.enkatapp.DTO.SurveyResponseDto;
 import com.example.enkatapp.models.Survey;
 import com.example.enkatapp.services.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/surveys")
+@CrossOrigin(origins = "http://localhost:3000")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class SurveyController {
 
     private final SurveyService surveyService;
@@ -21,10 +24,15 @@ public class SurveyController {
     }
 
     @PostMapping
-    public ResponseEntity<Survey> createSurvey(@RequestBody Survey survey) {
-        Survey createdSurvey = surveyService.createSurvey(survey);
-        return ResponseEntity.ok(createdSurvey);
+    public ResponseEntity<?> createSurvey(@RequestBody Survey survey) {
+        try {
+            Survey createdSurvey = surveyService.createSurvey(survey);
+            return new ResponseEntity<>(createdSurvey, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error message related to the exception", HttpStatus.BAD_REQUEST);
+        }
     }
+
 
     @GetMapping
     public ResponseEntity<List<Survey>> getAllSurveys() {
