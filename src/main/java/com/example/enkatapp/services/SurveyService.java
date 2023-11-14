@@ -1,11 +1,13 @@
 package com.example.enkatapp.services;
 
 import com.example.enkatapp.models.Survey;
+import com.example.enkatapp.models.UserEntity;
 import com.example.enkatapp.repositories.SurveyRepository;
+import com.example.enkatapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -14,13 +16,20 @@ public class SurveyService {
 
     private final SurveyRepository surveyRepository;
     private final ResponseService responseService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public SurveyService(SurveyRepository surveyRepository, ResponseService responseService) {
+    public SurveyService(SurveyRepository surveyRepository, ResponseService responseService, UserRepository userRepository) {
         this.surveyRepository = surveyRepository;
         this.responseService = responseService;
+        this.userRepository = userRepository;
     }
     public Survey createSurvey(Survey survey) {
+        String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity currentUser = userRepository.findByUsername(currentUserName)
+                .orElseThrow(() -> new NoSuchElementException("Användare hittades inte: " + currentUserName));
+
+        currentUser.addSurvey(survey); // Lägger till survey till användaren och sätter användaren på survey
         return surveyRepository.save(survey);
     }
 

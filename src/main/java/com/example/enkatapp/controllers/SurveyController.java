@@ -7,13 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/surveys")
+@RequestMapping("api/surveys")
 @CrossOrigin(origins = "http://localhost:3000")
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class SurveyController {
 
     private final SurveyService surveyService;
@@ -36,9 +36,14 @@ public class SurveyController {
 
     @GetMapping
     public ResponseEntity<List<Survey>> getAllSurveys() {
-        List<Survey> surveys = surveyService.getAllSurveys();
-        return ResponseEntity.ok(surveys);
+        try {
+            List<Survey> surveys = surveyService.getAllSurveys();
+            return ResponseEntity.ok(surveys);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Survey> getSurveyById(@PathVariable Long id) {

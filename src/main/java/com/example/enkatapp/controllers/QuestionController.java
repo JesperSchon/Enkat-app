@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/questions")
+@RequestMapping("api/questions")
 @CrossOrigin(origins = "http://localhost:3000")
 public class QuestionController {
 
@@ -51,8 +51,12 @@ public class QuestionController {
 
     @GetMapping
     public ResponseEntity<List<Question>> getAllQuestions() {
-        List<Question> questions = questionService.getAllQuestions();
-        return ResponseEntity.ok(questions);
+        try {
+            List<Question> questions = questionService.getAllQuestions();
+            return ResponseEntity.ok(questions);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @GetMapping("/{id}")

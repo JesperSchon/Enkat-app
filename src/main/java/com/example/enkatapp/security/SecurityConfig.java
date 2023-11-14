@@ -35,8 +35,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(authEntryPoint))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeRequests(authz -> authz
+                .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/surveys/**").hasAnyRole("ADMIN","CREATOR")
+                        .requestMatchers("api/questions/**").hasAnyRole("ADMIN","CREATOR")
                         .anyRequest().authenticated()
                 )
                 .httpBasic(withDefaults());
