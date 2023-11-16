@@ -14,11 +14,11 @@ public class UserEntityController {
 
     private final UserEntityService userEntityService;
 
-    public UserEntityController(UserEntityService userEntityService, UserRepository userRepository) {
+    public UserEntityController(UserEntityService userEntityService) {
         this.userEntityService = userEntityService;
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<UserEntity> createUser(@RequestBody UserEntity userEntity) {
         try {
             UserEntity newUser = userEntityService.createUser(userEntity);
@@ -38,5 +38,13 @@ public class UserEntityController {
         }
     }
 
-
+    @PutMapping("/{id}")
+    public ResponseEntity<UserEntity> updateUser(@PathVariable Long id, @RequestBody UserEntity userEntity) {
+        try {
+            UserEntity updatedUser = userEntityService.updateUser(id, userEntity);
+            return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

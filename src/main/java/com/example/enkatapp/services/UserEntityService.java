@@ -5,6 +5,8 @@ import com.example.enkatapp.repositories.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserEntityService {
 
@@ -27,10 +29,24 @@ public class UserEntityService {
         userRepository.deleteById(id);
     }
 
-
-
+    public UserEntity updateUser(Long id, UserEntity userEntity) {
+        UserEntity user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Användare inte hittad med id " + id));
+        user.setUsername(userEntity.getUsername());
+        user.setEmail(userEntity.getEmail());
+        user.setPassword(userEntity.getPassword());
+        return userRepository.save(user);
+    }
     public UserEntity findById(Long id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public Optional<UserEntity> findByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public Optional<UserEntity> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public UserEntity save(UserEntity userEntity) {

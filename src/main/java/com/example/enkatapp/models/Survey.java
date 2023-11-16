@@ -1,5 +1,6 @@
 package com.example.enkatapp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class Survey {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserEntity userEntity;
 
     public UserEntity getUserEntity() {
