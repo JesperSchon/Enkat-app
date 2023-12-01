@@ -22,7 +22,7 @@ public class Survey {
         createdAt = LocalDateTime.now();
     }
 
-    @OneToMany(mappedBy = "survey")
+    @OneToMany(mappedBy = "survey", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Question> questions;
 
