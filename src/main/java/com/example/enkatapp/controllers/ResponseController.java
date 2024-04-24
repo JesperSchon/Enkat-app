@@ -12,8 +12,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/responses")
-@CrossOrigin(origins = "http://localhost:3000")
+@RequestMapping("api/responses")
+@CrossOrigin(origins = "http://localhost:3001")
 public class ResponseController {
 
     private final ResponseService responseService;
@@ -38,8 +38,12 @@ public class ResponseController {
 
     @GetMapping
     public ResponseEntity<List<Response>> getAllResponses() {
-        List<Response> responses = responseService.getAllResponses();
-        return ResponseEntity.ok(responses);
+        try {
+            List<Response> responses = responseService.getAllResponses();
+            return ResponseEntity.ok(responses);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @GetMapping("/{id}")

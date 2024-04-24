@@ -1,5 +1,6 @@
 package com.example.enkatapp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -21,12 +22,13 @@ public class Survey {
         createdAt = LocalDateTime.now();
     }
 
-    @OneToMany(mappedBy = "survey")
+    @OneToMany(mappedBy = "survey", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Question> questions;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
     private UserEntity userEntity;
 
     public UserEntity getUserEntity() {

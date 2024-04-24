@@ -1,5 +1,6 @@
 package com.example.enkatapp.models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,7 @@ public class UserEntity {
 
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<Survey> surveys = new ArrayList<>();
 
     // getters och setters
