@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api/surveys")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 public class SurveyController {
 
     private final SurveyService surveyService;

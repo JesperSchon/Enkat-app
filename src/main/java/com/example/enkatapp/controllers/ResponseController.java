@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api/responses")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 public class ResponseController {
 
     private final ResponseService responseService;

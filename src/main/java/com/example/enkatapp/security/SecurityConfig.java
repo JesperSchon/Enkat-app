@@ -3,6 +3,7 @@ package com.example.enkatapp.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -45,8 +46,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/surveys/**").permitAll()
-                        .requestMatchers("/api/questions/**").hasAnyRole("ADMIN","CREATOR")
-                        .requestMatchers("/api/responses/**").hasAnyRole("ADMIN","CREATOR","USER")
+                        .requestMatchers("/api/questions/**").permitAll()
+                        .requestMatchers("/api/responses/**").permitAll()
                         .requestMatchers("/api/users/**").permitAll()
                         .anyRequest().authenticated()
                 )
